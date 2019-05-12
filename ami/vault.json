@@ -1,0 +1,49 @@
+{
+  "description": "AMI definition for a production-grade Vault server",
+  "min_packer_version": "1.4.0",
+
+  "variables": {
+    "vault_version": "1.1.2",
+    "source_ami": "ami-0889b8a448de4fc44",
+    "builder_server_region": "ap-south-1",
+    "ami_region": "ap-south-1"
+  },
+
+  "builders": [{
+    "ami_description": "Production-grade Vault server on Amazon Linux 2",
+    "ami_name": "vault-{{user `vault_version`}}-{{timestamp}}",
+    "type": "amazon-ebs",
+    "region": "{{user `builder_server_region`}}",
+    "source_ami": "{{user `source_ami`}}",
+    "instance_type": "t2.small",
+    "communicator": "ssh",
+    "ssh_username": "ec2-user",
+    "ssh_file_transfer_method": "scp",
+    "ami_regions": ["{{user `ami_region`}}"]
+  }],
+
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "mkdir -p /tmp/assets"
+      ]
+    },
+    {
+      "type": "file",
+      "source": "assets",
+      "destination": "/tmp/assets/vault"
+    },
+    {
+      "type": "shell",
+      "scripts": ["vault.sh"],
+      "environment_vars": [
+        "VAULT_VERSION={{user `vault_version`}}"
+      ]
+    },
+    {
+      "type": "shell",
+      "inline": ["rm -rf /tmp/assets"]
+    }
+  ]
+}
