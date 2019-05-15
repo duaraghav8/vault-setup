@@ -84,6 +84,7 @@ resource "aws_iam_instance_profile" "vault_server" {
 }
 
 data "aws_iam_policy_document" "vault_server" {
+  # Storage backend
   statement {
     effect = "Allow"
 
@@ -110,6 +111,7 @@ data "aws_iam_policy_document" "vault_server" {
     resources = ["${aws_dynamodb_table.vault_storage_backend.arn}"]
   }
 
+  # Unseal
   statement {
     effect = "Allow"
 
@@ -122,12 +124,39 @@ data "aws_iam_policy_document" "vault_server" {
     resources = ["${aws_kms_key.vault_unseal_key.arn}"]
   }
 
+  # EC2 read
   statement {
     effect = "Allow"
 
     actions = [
       "ec2:DescribeInstances",
       "ec2:DescribeTags",
+    ]
+
+    resources = ["*"]
+  }
+
+  # IAM management
+  statement {
+    effect = "Allow"
+
+    actions = [
+      "iam:AttachUserPolicy",
+      "iam:CreateAccessKey",
+      "iam:CreateUser",
+      "iam:DeleteAccessKey",
+      "iam:DeleteUser",
+      "iam:DeleteUserPolicy",
+      "iam:DetachUserPolicy",
+      "iam:GetInstanceProfile",
+      "iam:GetRole",
+      "iam:GetUser",
+      "iam:ListAccessKeys",
+      "iam:ListAttachedUserPolicies",
+      "iam:ListGroupsForUser",
+      "iam:ListUserPolicies",
+      "iam:PutUserPolicy",
+      "iam:RemoveUserFromGroup",
     ]
 
     resources = ["*"]
@@ -177,7 +206,7 @@ resource "aws_kms_key" "vault_unseal_key" {
 }
 
 resource "aws_kms_alias" "unseal_key_alias" {
-  name          = "alias/${var.vault_tags["cluster-name"]}-unseal-key"
+  name          = "alias/vault-${var.vault_tags["cluster-name"]}-unseal-key"
   target_key_id = "${aws_kms_key.vault_unseal_key.id}"
 
   lifecycle {
