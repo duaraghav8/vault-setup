@@ -18,8 +18,8 @@ Capabilities=CAP_IPC_LOCK+ep
 CapabilityBoundingSet=CAP_SYSLOG CAP_IPC_LOCK
 NoNewPrivileges=yes
 EnvironmentFile=-/tmp/vault-env
-ExecStartPre=/usr/local/bin/generate-metadata /tmp/vault-env
-ExecStart=/usr/local/bin/vault server -config=/etc/vault.d/vault.hcl
+ExecStartPre=/usr/bin/generate-metadata /tmp/vault-env
+ExecStart=/usr/bin/vault server -config=/etc/vault.d/vault.hcl
 ExecReload=/bin/kill --signal HUP $MAINPID
 KillMode=process
 KillSignal=SIGINT

@@ -5,22 +5,22 @@ set -xeou pipefail
 sudo yum update -y
 
 # Setup utility script(s)
-sudo cp /tmp/assets/vault/generate-metadata.sh /usr/local/bin/generate-metadata
-sudo chown root:root /usr/local/bin/generate-metadata
-sudo chmod 0755 /usr/local/bin/generate-metadata
+sudo cp /tmp/assets/vault/generate-metadata.sh /usr/bin/generate-metadata
+sudo chown root:root /usr/bin/generate-metadata
+sudo chmod 0755 /usr/bin/generate-metadata
 
 # Install
 sudo wget --quiet https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip -O /tmp/assets/vault/vault.zip
-sudo unzip -q /tmp/assets/vault/vault.zip -d /usr/local/bin
+sudo unzip -q /tmp/assets/vault/vault.zip -d /usr/bin
 
-sudo chown root:root /usr/local/bin/vault
-sudo chmod 0755 /usr/local/bin/vault
+sudo chown root:root /usr/bin/vault
+sudo chmod 0755 /usr/bin/vault
 
 vault -autocomplete-install
-complete -C /usr/local/bin/vault vault
+complete -C /usr/bin/vault vault
 
 # Configure
-sudo setcap cap_ipc_lock=+ep /usr/local/bin/vault
+sudo setcap cap_ipc_lock=+ep /usr/bin/vault
 sudo useradd --system --home /etc/vault.d --shell /bin/false vault
 
 sudo mkdir -p /etc/vault.d
