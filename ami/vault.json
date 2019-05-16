@@ -19,7 +19,8 @@
     "communicator": "ssh",
     "ssh_username": "ec2-user",
     "ssh_file_transfer_method": "scp",
-    "ami_regions": ["{{user `ami_region`}}"]
+    "ami_regions": ["{{user `ami_region`}}"],
+    "delete_on_termination": true
   }],
 
   "provisioners": [
