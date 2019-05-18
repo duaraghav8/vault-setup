@@ -21,7 +21,7 @@ KV `v1` is enabled for static secret storage. Alice can read and write secrets o
 
 `worker` needs to read payment credentials `merchant-id` & `merchant-secret` from `secret/payments/foo-gateway` in order to use a payment gateway.
 
-Note that static secrets are not written from this TF configuration. The best practice is to populate static secrets manually inside Vault. Alice does it too!
+Note that static secret values are not written from this TF configuration. The best practice is to populate static secrets manually inside Vault. Alice does it too!
 
 ### AWS
 AWS secret backend is enabled to generate dynamic IAM credentials with specific policies. Apps can have read access for certain roles based on the need. These roles, in turn, contain IAM policies allowing access to AWS services.
