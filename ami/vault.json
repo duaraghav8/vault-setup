@@ -15,12 +15,11 @@
     "type": "amazon-ebs",
     "region": "{{user `builder_server_region`}}",
     "source_ami": "{{user `source_ami`}}",
-    "instance_type": "t2.small",
+    "instance_type": "t2.micro",
     "communicator": "ssh",
     "ssh_username": "ec2-user",
     "ssh_file_transfer_method": "scp",
-    "ami_regions": ["{{user `ami_region`}}"],
-    "delete_on_termination": true
+    "ami_regions": ["{{user `ami_region`}}"]
   }],
 
   "provisioners": [
