@@ -28,7 +28,7 @@ Note that static secret values are not written from this TF configuration. The b
 ### AWS
 AWS secret backend is enabled to generate dynamic IAM credentials with specific policies. Apps can have read access for certain roles based on the need. These roles, in turn, contain IAM policies allowing access to AWS services.
 
-`worker` needs to read events from AWS SQS and write data to an S3 bucket. This is allowed by `aws/roles/app-worker` role. Hence, `worker` must have read access to `aws/creds/app-worker` in Vault.
+`worker` needs to read data from multiple S3 buckets. This is allowed by `aws/roles/app-worker` role. Hence, `worker` must have read access to `aws/creds/app-worker` in Vault.
 
 ### Database
 Database secret backend is enabled to dynamically generate credentials for MongoDB.
