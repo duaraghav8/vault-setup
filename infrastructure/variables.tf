@@ -14,6 +14,16 @@ variable "subnet_size_map" {
   }
 }
 
+variable "geo" {
+  type        = "map"
+  description = "Geographical configuration for infrastructure"
+
+  default = {
+    "default_region"            = "ap-south-1"
+    "default_availability_zone" = "ap-south-1a"
+  }
+}
+
 variable "iam_policy_session_management_arn" {
   description = "ARN of the AWS-managed IAM Policy to enable AWS Session Manager. This is a well-known ARN."
 }
