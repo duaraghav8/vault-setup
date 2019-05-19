@@ -1,5 +1,17 @@
-variable "main_vpc_id" {
-  description = "ID of the VPC inside which Vault cluster will be created"
+variable "main_vpc_cidr" {
+  description = "Main VPC CIDR block"
+}
+
+variable "subnet_size_map" {
+  type        = "map"
+  description = "Mapping of subnet size to no. of frozen bits required in a /16 VPC CIDR"
+
+  default = {
+    "128"  = 9
+    "256"  = 8
+    "512"  = 7
+    "1024" = 6
+  }
 }
 
 variable "iam_policy_session_management_arn" {
@@ -27,14 +39,15 @@ variable "vault_server_disk_size" {
   description = "Root block device storage size for Vault server"
 }
 
-variable "vault_cluster_subnet_id" {
-  description = "ID of Subnet reserved for Vault Cluster inside the main VPC"
-}
-
 variable "vault_dynamo_read_cap" {
   description = "Provisioned Read capacity for DynamoDB Table used as Vault cluster storage backend"
 }
 
 variable "vault_dynamo_write_cap" {
   description = "Provisioned Write capacity for DynamoDB Table used as Vault cluster storage backend"
+}
+
+variable "vault_subnet_size" {
+  default     = "128"
+  description = "Size of subnet containing Vault infrastructure"
 }

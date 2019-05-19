@@ -1,8 +1,3 @@
-# Network (not TF-managed)
-data "aws_vpc" "main" {
-  id = "${var.main_vpc_id}"
-}
-
 # AMI
 data "aws_ami" "vault" {
   owners = ["self"]
@@ -15,13 +10,14 @@ data "aws_ami" "vault" {
 
 # Server(s)
 resource "aws_instance" "vault" {
-  count = "${var.vault_cluster_size}"
+  count      = "${var.vault_cluster_size}"
+  depends_on = ["aws_internet_gateway.main_vpc"]
 
   ami                    = "${data.aws_ami.vault.id}"
   instance_type          = "${var.vault_server_instance_type}"
   tags                   = "${var.vault_tags}"
   volume_tags            = "${var.vault_tags}"
-  subnet_id              = "${var.vault_cluster_subnet_id}"
+  subnet_id              = "${aws_subnet.vault_cluster.id}"
   iam_instance_profile   = "${aws_iam_instance_profile.vault_server.name}"
   vpc_security_group_ids = ["${aws_security_group.vault.id}"]
 
@@ -40,7 +36,7 @@ resource "aws_instance" "vault" {
 resource "aws_security_group" "vault" {
   name        = "vault-${var.vault_tags["cluster-name"]}"
   description = "Allow ingress requests to Vault API from enclosing VPC"
-  vpc_id      = "${var.main_vpc_id}"
+  vpc_id      = "${aws_vpc.main.id}"
   tags        = "${var.vault_tags}"
 
   ingress {
@@ -48,7 +44,7 @@ resource "aws_security_group" "vault" {
     to_port     = 8200
     protocol    = "tcp"
     self        = true
-    cidr_blocks = ["${data.aws_vpc.main.cidr_block}"]
+    cidr_blocks = ["${aws_vpc.main.cidr_block}"]
   }
 
   egress {

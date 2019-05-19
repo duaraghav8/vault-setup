@@ -14,8 +14,6 @@ See [Provider documentation](https://www.terraform.io/docs/providers/aws/index.h
 
 The EC2 machines are configured to spin up without any SSH keys, thereby closing down SSH access. AWS Session Manager is enabled in order to start a Shell session inside the server.
 
-Note that the network infrastructure is not Terraform-managed. This configuration assumes that the VPC, subnet and other network resources already exist and simply expects their resource IDs.
-
 ```bash
 aws ssm start-session --target [INSTANCE-ID]
 ```
