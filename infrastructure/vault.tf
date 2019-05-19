@@ -45,6 +45,15 @@ resource "aws_security_group" "vault" {
     protocol    = "tcp"
     self        = true
     cidr_blocks = ["${aws_vpc.main.cidr_block}"]
+    description = "Vault reachable from anywhere inside main VPC"
+  }
+
+  ingress {
+    from_port   = 8201
+    to_port     = 8201
+    protocol    = "tcp"
+    self        = true
+    description = "Vault server-to-server communication"
   }
 
   egress {

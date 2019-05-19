@@ -5,6 +5,8 @@ The configuration aims to demonstrate how a production application might authent
 
 Vault cluster should be reachable at the address supplied from the machine executing this Terraform code and must already be initialized.
 
+Post initialization, run Terraform using `terraform apply` to write the configuration to Vault.
+
 ## Example application
 For the purpose of this repo, all configuration of Vault revolves around the idea of an app that authenticates to and consumes secrets from Vault. This is a background worker app, henceforth known as `worker`.
 

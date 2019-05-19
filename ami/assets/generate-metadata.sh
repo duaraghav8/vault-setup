@@ -19,5 +19,4 @@ AWS_DEFAULT_REGION=${region}
 VAULT_AWSKMS_SEAL_KEY_ID=alias/vault-${tag_cluster_name}-unseal-key
 AWS_DYNAMODB_TABLE=vault-${tag_cluster_name}-storage-backend
 VAULT_API_ADDR=http://${instance_private_ip}:8200
-VAULT_CLUSTER_ADDR=https://${instance_private_ip}:8201
 EOF

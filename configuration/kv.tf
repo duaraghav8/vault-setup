@@ -1,3 +1,10 @@
+# Starting v1.1.0, Vault doesn't mount the KV backend by default
+resource "vault_mount" "kv" {
+  path        = "secret"
+  type        = "kv"
+  description = "Static secrets"
+}
+
 resource "vault_generic_secret" "payments_gateway_foo" {
   path = "secret/payments/foo-gateway"
 
