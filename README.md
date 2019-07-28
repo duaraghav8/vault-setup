@@ -1,5 +1,5 @@
 # vault-setup
-Setup for a production-grade Vault cluster
+This repository demonstrates setup for a minimal production-grade [Vault](https://www.vaultproject.io/) cluster. I made it for my own practice.
 
 1. Run Packer with `ami/vault.json` to build the AMI. This AMI will be used to create Vault servers.
 2. Run Terraform inside `infrastructure/` to build a High-Availability Vault cluster with DynamoDB as Storage backend.

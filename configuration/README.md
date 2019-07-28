@@ -1,3 +1,5 @@
+**NOTE**: configuration is incomplete at this time.
+
 # Vault configuration
 This directory contains Terraform code to automate configuration of Secret & Authentication backends and Policies in Vault.
 
